@@ -75,3 +75,28 @@ int sumCalculator(int... numbers) {
     return Arrays.stream(numbers).sum();    
 }
 ```
+
+## CH 06. 객체지향 프로그래밍 2
+
+### abstract와 interface 본질적인 차이
+
+우리가 흔히 알고 있는 abstract와 interface의 문법적 차이 (다중 상속 여부, 필드 여부, 구현된 메소드 포함 여부) 외에 정말 프로그래밍 측면에서의 차이를 알기 위해서 검색해봤다.
+
+[Stackoverflow](https://stackoverflow.com/questions/1913098/what-is-the-difference-between-an-interface-and-abstract-class) 의 답변 중 하나이다.
+
+다음과 같은 경우 추상 클래스 사용을 고려해라
+
+- 밀접하게 관련된 여러 클래스 간에 코드를 공유하려고 한다.
+- 추상 클래스를 확장하는 클래스에 많은 공통 메서드 또는 필드가 있거나 public 이외의 접근 제어자가 필요할 때(예: protected 및 private).
+- `non-static` 또는 `non-final field`를 선언하려고 한다.
+
+다음과 같은 경우 인터페이스 사용을 고려해라
+
+- 관련 없는 클래스가 인터페이스를 구현할 것으로 예상된다. 예를 들어, 관련 없는 많은 개체가 `Serializable` 인터페이스를 구현할 수 있다.
+- 특정 데이터 유형의 동작을 지정하려고 하지만, 누가 해당 동작을 구현하는지는 중요하지 않다.
+- 유형의 다중 상속을 활용하려고 합니다.
+
+즉, 추상 클래스는 확장하는 클래스와 "is-a" 관계를 설정한다. 인터페이스는 클래스에 대해 "has-a" 관계를 설정한다.
+
+java8부터 default 키워드로 `interface`에서도 메서드를 구현할 수 있게 되었고, `abstract`와 `interface`와의 명확한 구분이 점점 흐릿해져가고 있는 것 같다.    
+하지만 각자의 키워드가 독립적으로 존재하는 것은 자체적으로 가지는 본질적인 차이가 있기 때문이라고 생각한다.

@@ -1,0 +1,37 @@
+package ch7.OOP2;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+public class ObjectOrientedChapter2 {
+    public static void main(String[] args) {
+        CaptionTv captionTv = new CaptionTv();
+    }
+}
+
+class Tv {
+    boolean power;
+    int channel;
+
+    public void power() {
+        this.power = !this.power;
+    }
+
+    public void channelUp() {
+        this.channel ++;
+    }
+
+    public void channelDown() {
+        if(this.channel <= 1) return;
+        this.channel --;
+    }
+}
+
+class CaptionTv extends Tv {
+    boolean caption;
+
+    public void displayCaption() {
+        this.caption = !this.caption;
+    }
+}
