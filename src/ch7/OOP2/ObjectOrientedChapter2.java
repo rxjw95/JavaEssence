@@ -2,11 +2,16 @@ package ch7.OOP2;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 public class ObjectOrientedChapter2 {
     public static void main(String[] args) {
         CaptionTv captionTv = new CaptionTv();
+        Properties hash = new Properties();
+        hash.put("jangwook", "2");
+        System.out.println(hash.getProperty("jangwook"));
+
     }
 }
 

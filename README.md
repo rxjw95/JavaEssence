@@ -76,7 +76,9 @@ int sumCalculator(int... numbers) {
 }
 ```
 
-## CH 06. 객체지향 프로그래밍 2
+---
+
+## CH 07. 객체지향 프로그래밍 2
 
 ### abstract와 interface 본질적인 차이
 
@@ -100,3 +102,49 @@ int sumCalculator(int... numbers) {
 
 java8부터 default 키워드로 `interface`에서도 메서드를 구현할 수 있게 되었고, `abstract`와 `interface`와의 명확한 구분이 점점 흐릿해져가고 있는 것 같다.    
 하지만 각자의 키워드가 독립적으로 존재하는 것은 자체적으로 가지는 본질적인 차이가 있기 때문이라고 생각한다.
+
+---
+
+## CH 08. 예외 처리
+
+### 예외 클래스의 계층 구조
+
+![예외 클래스 계층 구조](https://www.nextree.co.kr/content/images/2021/01/Exception-Class.png)
+
+모든 예외 클래스는 `Throwable` 객체를 상속을 받고 있고, 당연하게도 `Throwable`은 최상위 객체인 `Object` 객체를 상속받고 있는 구조다.
+
+`Throwable`을 상속받고 있는 객체는 `Error`와 `Exception`이라는 두 객체로 나눌 수 있는데, `Erorr`는 시스템 레벨의 심각한 수준의 에러이기 때문에 시스템에 변화를 주어 문제를 해결하는 것이 일반적이다. (즉, 애플리케이션 단에서 Error를 처리할 방도가 없다.)
+반면에, `Exception`은 개발자가 로직을 추가하여 핸들링할 수 있다.  
+
+우리는 여기서 `Exception`에 대해 내용을 다뤄본다.
+
+### Checked Exception과 Unchecked Exception
+|      특징       |               Checked Exception               |        Unchecked Exception         |
+|:-------------:|:---------------------------------------------:|:----------------------------------:|
+|     처리 여부     |                   반드시 예외 처리                   |           예외 처리하지 않아도 됨            |
+|  Rollback 여부  |                       X                       |                 O                  |
+|     대표 예외     |  Exception 클래스 하위 RuntimeException 외의 모든 클래스  | RuntimeException을 포함한 하위 모든 자식 클래스 |
+
+
+- Checked Exception
+  반드시 명시적으로 예외를 처리해야 하기 때문에 `Checked Exception`이라고 하며, try/catch를 해서 에러를 잡든 throws를 통해서 호출한 메서드로 예외를 던져야 한다.
+
+- Unchecked Exception
+  명시적으로 예외 처리를 강제하지 않는 특징이 있기 때문에 `Unchecked Exception`이라 하며, try/catch로 잡거나 throw로 호출한 메서드로 예외를 던지지 않아도 상관없다.
+
+### 예외 처리 전략
+
+1. 예외 복구
+   - 예외가 발생하면 다른 작업 흐름으로 유도하는 기법
+   - 핵심은 예외가 발생하여도 애플리케이션은 정상적인 흐름으로 동작하는 것
+2. 예외 처리 회피
+   - 예외가 발생하면 처리하지 않고 호출한 쪽으로 예외를 던지는 기법
+   - 무책임하게 던지는 것은 위험하다. 호출한 쪽에서 예외를 처리하거나 해당 메서드에서 예외를 던지는 것이 최선일 때만 사용
+3. 예외 전환
+   - 예외가 발생하면 새로운 다른 예외를 던지는 기법
+   - 예외를 처리할 때 더 명확하게 예외의 종류를 인지할 수 있게 도와줌
+
+> 현실은 우리는 예외가 발생했을 때 예외를 복구할 수 있는 방법은 많지 않다.
+
+결국 예외 복구 전략이 명확하고 그것이 가능하다면 `Checked exception`을 try/catch로 잡고 해당 복구를 하는 것이 좋지만, 그렇지 않은 경우 `exception`을 발생시킬 때 명확하게 어떤 예외가 발생했는지 정보를 전달해주는 것이 최선이다.
+
