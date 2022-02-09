@@ -148,3 +148,70 @@ java8부터 default 키워드로 `interface`에서도 메서드를 구현할 수
 
 결국 예외 복구 전략이 명확하고 그것이 가능하다면 `Checked exception`을 try/catch로 잡고 해당 복구를 하는 것이 좋지만, 그렇지 않은 경우 `exception`을 발생시킬 때 명확하게 어떤 예외가 발생했는지 정보를 전달해주는 것이 최선이다.
 
+---
+
+## CH 09. java.lang package
+
+### Object 클래스
+
+- equals()
+객체의 참조변수를 받아서 비교하여 그 결과를 반환하는 역할
+
+```java
+public boolean equals(Object obj) {
+    return (this == obj);
+}
+```
+
+위의 코드를 보면 알 수 있듯이 두 객체의 같고 다름을 참조변수의 값으로 판단한다.
+
+> 객체를 생성할 때 메모리의 비어있는 공간을 찾아 생성하기 때문에 서로 다른 두 개의 객체가 같은 주소를 갖는 일은 있을 수 없다.
+> 두 개 이상의 참조변수가 같은 주소값을 갖는 경우는 가능하다.
+
+그래서 보통 흔히 객체 비교시 각 필드 값을 비교하도록 equals 메서드를 오버라이딩한다.
+
+- hashCode()
+
+해싱 기법에 사용되는 해시함수의 역할을 한다.
+해싱은 데이터 관리 기법 중에 하나인데, 다량의 데이터를 저장하고 검색하는 데 유용하다.
+
+해시 함수는 찾고자하는 값을 입력하면, 그 값이 저장된 위치를 알려주는 해시코드를 반환한다.
+
+hashCode는 객체의 주소값으로 해시코드를 만들어 반환하기 때문에 절대 같은 해시 코드를 가질 수 없지만, 64bit JVM에서는 32bit 해시 코드를 만들기 때문에
+중복될 수 있다. 그렇기 때문에 클래스의 인스턴수 변수 값으로 객체의 같고 다름을 판단하는 경우 equals와 hashCode를 적절히 함께 사용해야한다.
+
+위의 내용을 Collection 챕터에서 보다 자세히 다룰 예정이다.
+
+### String 클래스
+- immutable 클래스
+- 리터럴로 중복으로 문자열을 만든 경우 String pool에서 공유가 되서 같은 참조를 가지게 된다.
+
+```java
+String a = "a"; // "a" 인스턴스 생성
+String b = "b"; // "b" 인스턴스 생성
+String c = "a"; // 변수 a와 같은 참조값을 가지고 있음        
+a = a + b;  // 변수 a의 인스턴스가 변경되는 것이 아닌 새로운 "ab" String 인스턴스가 생성
+```
+
+즉, 문자열간의 결합과 추출 등 복잡한 연산이 필요한 경우 mutable한 `StringBuffer`를 사용하는 것이 좋다.
+
+### StringBuffer와 StringBuilder 클래스
+String 클래스와는 다르게 StringBuffer와 StringBuilder는 지정된 문자열을 변경할 수 있다.
+
+StringBuffer와 StringBuilder의 차이는 멀티 스레드 환경에서의 동기화 그리고 toString 메서드를 위한 캐시 여부의 차이가 있고 다른 차이는 크게 없으므로 StringBuffer를 중심으로 설명한다.
+
+StringBuffer는 내부적으로 문자열을 편집하기 위한 버퍼를 가지고 있다. 인스턴스를 생성할 때 그 크기를 지정할 수 있다.
+
+편집할 문자열이 버퍼보다 크면 버퍼의 크기를 늘리는 작업이 있기 때문에 넉넉히 잡아주는 것이 효율적이다.
+(버퍼의 크기보다 크면 내부적으로 새로운 char 배열을 만들고 System.copyarray로 복사하는 과정이 추가 된다.)
+
+주의할 점은 StringBuffer와 StringBuilder 클래스의 equals()는 오버라이딩되어 있기 때문에 등가비교연산자(==)와 같은 결과를 얻는다.
+그렇기 때문에 toString() 메서드로 String으로 타입 변환 후에 equals를 수행해야한다.
+```java
+StringBuffer sb = new StringBuffer("abc");
+StringBuffer sb2 = new StringBuffer("abc");
+
+System.out.println(sb == sb2); // false
+System.out.println(sb.equals(sb2)); // false
+
+```
