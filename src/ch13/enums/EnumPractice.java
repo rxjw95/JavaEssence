@@ -1,37 +1,49 @@
 package ch13.enums;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class EnumPractice {
     public static void main(String[] args) {
-        System.out.println(PATH.GOOGLE.getValues()); // [https://www.goggle.com, 구글]
+        System.out.println(TRANSPORTATION.TRAIN.getBasicFare()); // 150
+        System.out.println(TRANSPORTATION.TRAIN.getAmountFor(100)); // 15000
+        System.out.println(TRANSPORTATION.BUS.getBasicFare()); // 100
+        System.out.println(TRANSPORTATION.BUS.getAmountFor(150)); // 15000
     }
 }
 
-enum PATH {
-    NAVER("https://www.naver.com", "네이버"),
-    GOOGLE("https://www.goggle.com", "구글"),
-    DAUM("https://www.daum.net", "다음");
+enum TRANSPORTATION {
+    BUS(100) {
+        @Override
+        int getAmountFor(int distance) {
+            return getBasicFare() * distance;
+        }
+    },
+    TRAIN(150) {
+        @Override
+        int getAmountFor(int distance) {
+            return getBasicFare() * distance;
+        }
+    },
+    SHIP(100) {
+        @Override
+        int getAmountFor(int distance) {
+            return getBasicFare() * distance;
+        }
+    },
+    AIRPLANE(300) {
+        @Override
+        int getAmountFor(int distance) {
+            return getBasicFare() * distance;
+        }
+    };
 
-    private final String url;
-    private final String koreanDomain;
+    private final int basicFare;
 
-    PATH(String url, String koreanDomain) {
-        this.url = url;
-        this.koreanDomain = koreanDomain;
+    TRANSPORTATION(int basicFare) {
+         this.basicFare = basicFare;
     }
 
-    String getUrl() {
-        return url;
-    }
+    abstract int getAmountFor(int distance);
 
-    String getKoreanDomain() {
-        return koreanDomain;
+    public int getBasicFare() {
+        return basicFare;
     }
-
-    List<String> getValues() {
-        return List.of(url, koreanDomain);
-    }
-
 }
