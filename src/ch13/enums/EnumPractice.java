@@ -1,49 +1,29 @@
 package ch13.enums;
 
+import java.util.Arrays;
+
 public class EnumPractice {
     public static void main(String[] args) {
-        System.out.println(TRANSPORTATION.TRAIN.getBasicFare()); // 150
-        System.out.println(TRANSPORTATION.TRAIN.getAmountFor(100)); // 15000
-        System.out.println(TRANSPORTATION.BUS.getBasicFare()); // 100
-        System.out.println(TRANSPORTATION.BUS.getAmountFor(150)); // 15000
+        System.out.println(FRUIT.getPriceBy("banana")); // 1000
     }
 }
 
-enum TRANSPORTATION {
-    BUS(100) {
-        @Override
-        int getAmountFor(int distance) {
-            return getBasicFare() * distance;
-        }
-    },
-    TRAIN(150) {
-        @Override
-        int getAmountFor(int distance) {
-            return getBasicFare() * distance;
-        }
-    },
-    SHIP(100) {
-        @Override
-        int getAmountFor(int distance) {
-            return getBasicFare() * distance;
-        }
-    },
-    AIRPLANE(300) {
-        @Override
-        int getAmountFor(int distance) {
-            return getBasicFare() * distance;
-        }
-    };
+enum FRUIT {
+    APPLE(500),
+    BANANA(1000),
+    MELON(1500);
 
-    private final int basicFare;
+    private final int price;
 
-    TRANSPORTATION(int basicFare) {
-         this.basicFare = basicFare;
+    FRUIT(int price) {
+        this.price = price;
     }
 
-    abstract int getAmountFor(int distance);
-
-    public int getBasicFare() {
-        return basicFare;
+    public static int getPriceBy(String fruit) {
+        return Arrays.stream(values())
+                .filter(value -> value.name().equalsIgnoreCase(fruit))
+                .map(filtered -> filtered.price)
+                .findAny()
+                .orElse(100);
     }
 }
