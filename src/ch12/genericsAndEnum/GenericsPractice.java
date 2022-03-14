@@ -1,4 +1,4 @@
-package ch12.generics;
+package ch12.genericsAndEnum;
 
 import java.util.ArrayList;
 import java.util.Comparator;

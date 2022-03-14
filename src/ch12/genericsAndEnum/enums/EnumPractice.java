@@ -1,4 +1,4 @@
-package ch13.enums;
+package ch12.genericsAndEnum.enums;
 
 import java.util.Arrays;
 
