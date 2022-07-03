@@ -1,4 +1,4 @@
-package ch13.thread.sync;
+package ch13.thread.sync.waitAndNotify;
 
 import java.util.ArrayList;
 
