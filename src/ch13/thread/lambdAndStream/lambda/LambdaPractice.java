@@ -11,6 +11,33 @@ class Calculator {
     }
 }
 
+@FunctionalInterface
+interface Printer {
+    void print();
+}
+
+class Outer {
+    int outerVal = 1;
+
+    class Inner {
+        private int innerVal = 2;
+
+        public void print(int p) {
+            int i = 3;
+            Printer printer = () -> {
+                System.out.println("outerVal: " + outerVal);
+                System.out.println("innerVal: " + innerVal);
+                System.out.println("innerVal one increase: " + ++innerVal);
+                System.out.println("outerVal one decrease: " + --outerVal);
+                //System.out.println("i: " + ++i);
+                //System.out.println("i: " + ++p);
+            };
+
+            printer.print();
+        }
+    }
+}
+
 public class LambdaPractice {
     public static void main(String[] args) {
         Function add = (a, b) -> a + b;
@@ -18,5 +45,11 @@ public class LambdaPractice {
 
         Calculator.calculate(3, 5, add);
         Calculator.calculate(5, 3, (a, b) -> a - b); // sub Function과 동일
+
+        Outer outer = new Outer();
+        Outer.Inner inner = outer.new Inner();
+
+        inner.print(3);
+        System.out.println(outer.outerVal);
     }
 }
