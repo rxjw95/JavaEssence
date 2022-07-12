@@ -20,7 +20,7 @@ public class ThreadPractice {
         });
 
         Thread runnableLambda = new Thread(() -> {
-            IntStream.range(0, 5).forEach(idx -> System.out.println("lambda: " + idx));
+            IntStream.range(0, 5).forEach(idx -> System.out.println("ch14.lambdAndStream.lambda: " + idx));
         });
     }
 }

@@ -1,4 +1,4 @@
-package ch13.thread.lambdAndStream.lambda;
+package ch14.lambdAndStream.lambda;
 
 @FunctionalInterface
 interface Function {

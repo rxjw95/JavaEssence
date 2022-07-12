@@ -1,4 +1,4 @@
-package ch13.thread.lambdAndStream.lambda;
+package ch14.lambdAndStream.lambda;
 
 import java.security.SecureRandom;
 import java.util.concurrent.Callable;
